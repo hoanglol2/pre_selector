@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.view.isVisible
+import com.example.picker_selector_app.R
 import com.example.picker_selector_app.databinding.LayoutImagePickerToolbarBinding
 import com.example.picker_selector_app.models.ImagePickerConfig
 
@@ -23,10 +25,10 @@ class ImagePickerToolbar @JvmOverloads constructor(
 
     private fun initViews() {
         val layoutInflater = LayoutInflater.from(context)
+        View.inflate(context, R.layout.layout_image_picker_toolbar, this)
         binding = LayoutImagePickerToolbarBinding.inflate(
             layoutInflater, this
         )
-        addView(binding.root)
     }
 
     fun config(config: ImagePickerConfig) {

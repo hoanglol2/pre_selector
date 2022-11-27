@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.picker_selector_app.R
 import com.example.picker_selector_app.models.GridCount
 import com.example.picker_selector_app.screens.images.ImagePickerScreen.Companion.BUCKET_ID

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="6dp"
-        android:text="No image available."
+        android:text="@string/noImageAvailableLabel"
         android:textColor="@color/white"
         android:visibility="gone"
         tools:visibility="visible" />

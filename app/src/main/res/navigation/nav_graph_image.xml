@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_image_picker_screen" />
 
     <fragment
-        android:id="@+id/folderFragment"
-        android:name="com.example.picker_selector_app.screens.images.FolderFragment"
-        android:label="FolderFragment"
-        tools:layout="@layout/fragment_folder"/>
+        android:id="@+id/imageFragment"
+        android:name="com.example.picker_selector_app.screens.images.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" />
 
 </navigation>

@@ -1,10 +1,13 @@
 package com.example.picker_selector_app.screens.images
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -63,9 +66,20 @@ class ImagePickerScreen : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBarTheme()
         initViews()
         initObserver()
         initListener()
+    }
+
+    private fun setupBarTheme() {
+        activity?.window?.apply {
+            // Setup status bar theme
+            statusBarColor = Color.parseColor(config.statusBarColor)
+            WindowCompat.setDecorFitsSystemWindows(this, false)
+            WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars =
+                config.isLightStatusBar
+        }
     }
 
     private fun initListener() {
@@ -114,10 +128,10 @@ class ImagePickerScreen : BaseFragment() {
                 .rationale("We need permission to see your beautiful face")
                 .checkPermission { isGranted ->
                     if (isGranted) {
-                        root.success("We can see your face :)")
+//                        root.success("We can see your face :)")
                         fetchData()
                     } else {
-                        root.error("We couldn't access the camera :(")
+//                        root.error("We couldn't access the camera :(")
                     }
                 }
         }
@@ -131,10 +145,10 @@ class ImagePickerScreen : BaseFragment() {
                 .rationale("We need permission to see your beautiful face")
                 .checkPermission { isGranted ->
                     if (isGranted) {
-                        root.success("We can see your face :)")
+//                        root.success("We can see your face :)")
                         fetchData()
                     } else {
-                        root.error("We couldn't access the camera :(")
+//                        root.error("We couldn't access the camera :(")
                     }
                 }
         }

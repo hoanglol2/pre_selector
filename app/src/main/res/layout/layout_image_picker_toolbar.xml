@@ -22,7 +22,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp16"
         android:layout_marginRight="@dimen/dp16"
-        android:layout_toStartOf="@+id/image_toolbar_camera"
+        android:layout_toStartOf="@+id/ivToolbarCamera"
         android:layout_toEndOf="@id/ivToolbarBack"
         android:ellipsize="end"
         android:maxLines="1"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/text_toolbar_done"
+        android:layout_toStartOf="@+id/tvToolbarDone"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="16dp"
         android:src="@drawable/ic_camera" />

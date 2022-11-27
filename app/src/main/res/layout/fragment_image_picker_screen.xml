@@ -10,18 +10,13 @@
     <com.example.picker_selector_app.wigets.ImagePickerToolbar
         android:id="@+id/toolbarImagePicker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frgContainerImagePicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbarImagePicker" />
-
-    <com.example.picker_selector_app.wigets.SnackBarView
-        android:id="@+id/snackBarImagePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

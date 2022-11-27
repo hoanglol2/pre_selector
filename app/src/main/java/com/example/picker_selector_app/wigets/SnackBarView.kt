@@ -19,7 +19,6 @@ class SnackBarView @JvmOverloads constructor(
 ) : RelativeLayout(context, attrsSet, defStyleAttr) {
 
     private var isShowing = false
-        private set
     private lateinit var binding: LayoutImagePickerSnackbarBinding
 
     companion object {
@@ -36,6 +35,7 @@ class SnackBarView @JvmOverloads constructor(
         binding = LayoutImagePickerSnackbarBinding.inflate(
             layoutInflater, this)
         addView(binding.root)
+
         if (isInEditMode) {
             return
         }
