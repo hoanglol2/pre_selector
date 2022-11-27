@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ImagePickerScreen">
+    android:fitsSystemWindows="true"
+    tools:background="#323232"
+    tools:context=".screens.images.ImagePickerScreen">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.example.picker_selector_app.wigets.ImagePickerToolbar
+        android:id="@+id/toolbarImagePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frgContainerImagePicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@+id/toolbarImagePicker" />
 
-</FrameLayout>
+    <com.example.picker_selector_app.wigets.SnackBarView
+        android:id="@+id/snackBarImagePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

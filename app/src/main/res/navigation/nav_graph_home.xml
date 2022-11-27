@@ -7,12 +7,14 @@
 
     <fragment
         android:id="@+id/homeScreen"
-        android:name="com.example.picker_selector_app.HomeScreen"
+        android:name="com.example.picker_selector_app.screens.HomeScreen"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" />
-    <fragment
-        android:id="@+id/imagePickerScreen"
-        android:name="com.example.picker_selector_app.ImagePickerScreen"
-        android:label="fragment_image_picker_screen"
-        tools:layout="@layout/fragment_image_picker_screen" />
+
+    <action
+        android:id="@+id/toNavGraphImage"
+        app:destination="@id/nav_graph_image" />
+
+    <include app:graph="@navigation/nav_graph_image" />
+
 </navigation>

@@ -1,8 +1,12 @@
 package com.example.picker_selector_app.models
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.Parcelable
+import com.example.picker_selector_app.R
 import kotlinx.parcelize.Parcelize
-import java.util.ArrayList
+import java.util.*
 
 @Parcelize
 data class ImagePickerConfig(
@@ -20,6 +24,8 @@ data class ImagePickerConfig(
     var isShowNumberIndicator: Boolean = false,
     var isShowCamera: Boolean = false,
     var maxSize: Int = Int.MAX_VALUE,
+    var folderGridCount: GridCount = GridCount(2, 4),
+    var imageGridCount: GridCount = GridCount(3, 5),
     var doneTitle: String? = null,
     var folderTitle: String? = null,
     var imageTitle: String? = null,
@@ -27,4 +33,35 @@ data class ImagePickerConfig(
     var subDirectory: String? = null,
     var isAlwaysShowDoneButton: Boolean = false,
     var selectedImages: ArrayList<Image> = arrayListOf()
-) : Parcelable
+) : Parcelable {
+
+    fun initDefaultValues(context: Context) {
+        context.apply {
+            if (folderTitle == null) {
+                folderTitle = getString(R.string.albumsLabel)
+            }
+            if (imageTitle == null) {
+                imageTitle = getString(R.string.photoLabel)
+            }
+            if (doneTitle == null) {
+                doneTitle = getString(R.string.doneLabel).uppercase()
+            }
+            if (subDirectory == null) {
+                subDirectory = getDefaultSubDirectoryName(this)
+            }
+        }
+    }
+    private fun getDefaultSubDirectoryName(context: Context): String {
+        val packageManager = context.packageManager
+        val appInfo: ApplicationInfo? = try {
+            packageManager.getApplicationInfo(context.applicationContext.packageName ?: "", 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+        return (if (appInfo != null) {
+            packageManager.getApplicationLabel(appInfo).toString()
+        } else {
+            context.getString(R.string.cameraLabel)
+        })
+    }
+}

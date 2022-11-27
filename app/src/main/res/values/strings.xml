@@ -1,5 +1,20 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">picker_selector_app</string>
+    <string name="permissionRequiredLabel">Permission required</string>
+    <string name="defaultMessageLabel">Default message</string>
+    <string name="okLabel">OK</string>
+    <string name="doneLabel">done</string>
+    <string name="cancelLabel" tools:ignore="ButtonCase">cancel</string>
+    <string name="albumsLabel">Albums</string>
+    <string name="photoLabel">Photos</string>
+    <string name="gifLabel">GIF</string>
+    <string name="cameraLabel">Camera</string>
+    <string name="noCameraLabel">No camera found.</string>
+    <string name="couldNotOpenCameraLabel">Could not open camera.</string>
+    <string name="noItemAvailableLabel">No image available.</string>
+    <string name="noExternalStoreMessage">To continue, please allow app to access photos and media on this device.</string>
+    <string name="limitSelectionLabel">Limit selection to %d images.</string>
+    <string name="folderLabel">Folder</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

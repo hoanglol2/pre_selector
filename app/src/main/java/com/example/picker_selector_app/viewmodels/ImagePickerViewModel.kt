@@ -8,6 +8,7 @@ import androidx.lifecycle.*
 import com.example.picker_selector_app.MyApplication
 import com.example.picker_selector_app.consts.CallbackStatus
 import com.example.picker_selector_app.models.Image
+import com.example.picker_selector_app.models.ImagePickerConfig
 import com.example.picker_selector_app.models.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,7 +22,16 @@ class ImagePickerViewModel(application: Application): AndroidViewModel(applicati
     private val contextRef = WeakReference(application.applicationContext)
     private var jobImageExternal: Job? = null
     private val _imageResultLiveData = MutableLiveData(Result(CallbackStatus.IDLE, arrayListOf()))
-    val imageResultLiveData = _imageResultLiveData
+    val imageResultLiveData: LiveData<Result> = _imageResultLiveData
+    private var config: ImagePickerConfig? = null
+    lateinit var selectedImages: MutableLiveData<ArrayList<Image>>
+
+    fun setConfig(config: ImagePickerConfig) {
+        this.config = config
+        selectedImages = MutableLiveData(config.selectedImages)
+    }
+
+    fun getConfig() = config ?: ImagePickerConfig()
 
     fun fetchImages() {
         if (jobImageExternal != null) return
@@ -58,7 +68,7 @@ class ImagePickerViewModel(application: Application): AndroidViewModel(applicati
                 projection,
                 null,
                 null,
-                MediaStore.Images.Media.DATE_ADDED + "DESC"
+                MediaStore.Images.Media.DATE_ADDED + " DESC"
             )?.use { cursor ->
                 val images = arrayListOf<Image>()
                 val idColumn = cursor.getColumnIndexOrThrow(
