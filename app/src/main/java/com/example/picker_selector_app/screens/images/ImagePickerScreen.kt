@@ -16,8 +16,7 @@ import com.example.picker_selector_app.common.PermissionManager
 import com.example.picker_selector_app.consts.EXTRA_CONFIG
 import com.example.picker_selector_app.consts.Permission
 import com.example.picker_selector_app.databinding.FragmentImagePickerScreenBinding
-import com.example.picker_selector_app.extensions.error
-import com.example.picker_selector_app.extensions.success
+import com.example.picker_selector_app.extensions.navigateAnim
 import com.example.picker_selector_app.models.Folder
 import com.example.picker_selector_app.models.ImagePickerConfig
 import com.example.picker_selector_app.screens.common.BaseFragment
@@ -41,7 +40,7 @@ class ImagePickerScreen : BaseFragment() {
             fragment: BaseFragment,
             config: ImagePickerConfig
         ) {
-            fragment.findNavController().navigate(
+            fragment.findNavController().navigateAnim(
                 R.id.toNavGraphImage,
                 bundleOf(IMAGE_PICKER_CONFIG_ARG to config)
             )
@@ -111,8 +110,8 @@ class ImagePickerScreen : BaseFragment() {
     }
 
     private fun initObserver() {
-        imagePickerShareVM.imageResultLiveData.observe(viewLifecycleOwner) {
-            Timber.d("Data Image External: $it")
+        imagePickerShareVM.folderLiveEvent.observe(viewLifecycleOwner) { folder ->
+            setupImageScreen(folder)
         }
     }
 
@@ -160,23 +159,24 @@ class ImagePickerScreen : BaseFragment() {
         // finishPickImages(selectedImages ?: arrayListOf())
     }
 
-    fun onFolderClick(folder: Folder) {
-        binding?.apply {
-            activity?.supportFragmentManager?.commit {
+    private fun setupImageScreen(folder: Folder) {
+        activity?.apply {
+            supportFragmentManager.commit {
                 add(
                     R.id.frgContainerImagePicker,
                     ImageFragment.newInstance(folder.bucketId, config.imageGridCount)
                 )
                 addToBackStack(null)
             }
-            toolbarImagePicker.setTitle(folder.name)
         }
+        binding?.toolbarImagePicker?.setTitle(folder.name)
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
         binding?.apply {
-            val fragment = activity?.supportFragmentManager?.findFragmentById(R.id.frgContainerImagePicker)
+            val fragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.frgContainerImagePicker)
             if (fragment != null && fragment is FolderFragment) {
                 toolbarImagePicker.setTitle(config.folderTitle)
             }
@@ -186,5 +186,6 @@ class ImagePickerScreen : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        Timber.d("onDestroyView ${this.javaClass.name}")
     }
 }

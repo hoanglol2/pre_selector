@@ -6,46 +6,48 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.picker_selector_app.R
+import com.example.picker_selector_app.adapters.ImagePickerAdapter
+import com.example.picker_selector_app.databinding.FragmentImagePickerScreenBinding
 import com.example.picker_selector_app.models.GridCount
 import com.example.picker_selector_app.screens.images.ImagePickerScreen.Companion.BUCKET_ID
 import com.example.picker_selector_app.screens.images.ImagePickerScreen.Companion.GRID_COUNT
+import com.example.picker_selector_app.viewmodels.ImagePickerViewModel
 
 class ImageFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var binding: FragmentImagePickerScreenBinding? = null
+    private val imagePickerAdapter by lazy { ImagePickerAdapter() }
+    private val imagePickerShareVM: ImagePickerViewModel by navGraphViewModels(R.id.nav_graph_image) {
+        ImagePickerViewModel.factory()
+    }
 
+    companion object {
+        @JvmStatic
+        fun newInstance(
+            bucketId: Long,
+            gridCount: GridCount
+        ) = ImageFragment().apply {
+            arguments = bundleOf(
+                BUCKET_ID to bucketId,
+                GRID_COUNT to gridCount
+            )
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_image, container, false)
+        binding = FragmentImagePickerScreenBinding.inflate(inflater)
+        val config = imagePickerShareVM.getConfig()
+        imagePickerAdapter.setConfig(config)
+        return binding?.root
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = ImageFragment()
-
-        fun newInstance(bucketId: Long, gridCount: GridCount): ImageFragment {
-            val fragment = ImageFragment()
-            val args = Bundle()
-            args.putLong(BUCKET_ID, bucketId)
-            args.putParcelable(GRID_COUNT, gridCount)
-            fragment.arguments = args
-            return fragment
-        }
-
-        fun newInstance(gridCount: GridCount): ImageFragment {
-            val fragment = ImageFragment()
-            val args = Bundle()
-            args.putParcelable(GRID_COUNT, gridCount)
-            fragment.arguments = args
-            return fragment
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

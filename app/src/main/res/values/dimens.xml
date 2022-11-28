@@ -1,4 +1,5 @@
 <resources>
     <dimen name="dp1">1dp</dimen>
+    <dimen name="dp4">4dp</dimen>
     <dimen name="dp16">16dp</dimen>
 </resources>

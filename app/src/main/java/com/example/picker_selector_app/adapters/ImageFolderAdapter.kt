@@ -54,7 +54,7 @@ class ImageFolderAdapter : RecyclerView.Adapter<ImageFolderAdapter.ImageFolderVH
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageFolderVH {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ImageFolderVH(
-            ItemImagePickerFolderBinding.inflate(layoutInflater)
+            ItemImagePickerFolderBinding.inflate(layoutInflater, parent, false)
         )
     }
 

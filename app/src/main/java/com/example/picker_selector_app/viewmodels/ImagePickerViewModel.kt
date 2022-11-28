@@ -7,9 +7,11 @@ import androidx.core.database.getStringOrNull
 import androidx.lifecycle.*
 import com.example.picker_selector_app.MyApplication
 import com.example.picker_selector_app.consts.CallbackStatus
+import com.example.picker_selector_app.models.Folder
 import com.example.picker_selector_app.models.Image
 import com.example.picker_selector_app.models.ImagePickerConfig
 import com.example.picker_selector_app.models.Result
+import com.example.picker_selector_app.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ class ImagePickerViewModel(application: Application): AndroidViewModel(applicati
     val imageResultLiveData: LiveData<Result> = _imageResultLiveData
     private var config: ImagePickerConfig? = null
     lateinit var selectedImages: MutableLiveData<ArrayList<Image>>
+    val folderLiveEvent = SingleLiveEvent<Folder>()
 
     fun setConfig(config: ImagePickerConfig) {
         this.config = config

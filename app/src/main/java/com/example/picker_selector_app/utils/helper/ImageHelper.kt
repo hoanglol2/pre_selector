@@ -38,7 +38,7 @@ object ImageHelper {
         return filteredImages
     }
 
-    fun findImageIndex(image: Image, images: ArrayList<Image>): Int {
+    fun findImageIndex(image: Image, images: List<Image>): Int {
         for (i in images.indices) {
             if (images[i].uri == image.uri) {
                 return i
@@ -47,7 +47,7 @@ object ImageHelper {
         return -1
     }
 
-    fun findImageIndexes(subImages: ArrayList<Image>, images: ArrayList<Image>): ArrayList<Int> {
+    fun findImageIndexes(subImages: List<Image>, images: List<Image>): ArrayList<Int> {
         val indexes = arrayListOf<Int>()
         for (image in subImages) {
             for (i in images.indices) {
@@ -69,9 +69,4 @@ object ImageHelper {
 
         return extension.equals("gif", ignoreCase = true)
     }
-
-//    fun getImageCollectionUri(): Uri {
-//        return if (DeviceHelper.isMinSdk29) MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-//        else MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//    }
 }

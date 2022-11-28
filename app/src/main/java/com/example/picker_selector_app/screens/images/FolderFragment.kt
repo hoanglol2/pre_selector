@@ -47,7 +47,7 @@ class FolderFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gridCount = arguments?.getParcelable(GRID_COUNT)
-            ?: GridCount(0, 0)
+            ?: GridCount(1, 1)
     }
 
     override fun onCreateView(
@@ -126,7 +126,7 @@ class FolderFragment : BaseFragment() {
 
     private fun initListener() {
         folderAdapter.setOnItemClickListener {
-            (parentFragment as? ImagePickerScreen)?.onFolderClick(it)
+            imagePickerShareVM.folderLiveEvent.value = it
         }
     }
 
