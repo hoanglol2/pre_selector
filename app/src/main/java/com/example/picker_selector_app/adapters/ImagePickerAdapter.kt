@@ -55,10 +55,6 @@ class ImagePickerAdapter : RecyclerView.Adapter<ImagePickerAdapter.ImagePickerVH
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.foreground = if (isSelected) ColorDrawable(
                 Color.parseColor("#4D000000")
-//                ContextCompat.getColor(
-//                    view.context,
-//                    R.color.imagepicker_black_alpha_30
-//                )
             ) else null
         }
     }
@@ -124,7 +120,40 @@ class ImagePickerAdapter : RecyclerView.Adapter<ImagePickerAdapter.ImagePickerVH
 
     override fun onBindViewHolder(holder: ImagePickerVH, position: Int) {
         if (position !in differ.currentList.indices) return
-        holder.bind(differ.currentList[position])
+        holder.bind(differ.currentList[position], position)
+    }
+
+    override fun onBindViewHolder(
+        holder: ImagePickerVH,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.viewBinding.apply {
+                val isShowNumbIndicator = config?.isShowNumberIndicator == true
+                when {
+                    payloads.any { it is ImageSelectedOrUpdated } -> {
+                        val image = differ.currentList[position]
+
+                        val selectedIndex = ImageHelper.findImageIndex(image, selectedImages)
+                        tvSelectedNumb.text = "${selectedIndex.plus(1)}"
+                        tvSelectedNumb.isVisible = isShowNumbIndicator
+                        ivSelectedIcon.isVisible = !isShowNumbIndicator
+                        setupItemForeground(ivThumbnail, true)
+                    }
+                    payloads.any { it is ImageUnselected } -> {
+                        if (isShowNumbIndicator) {
+                            tvSelectedNumb.isVisible = false
+                        } else {
+                            ivSelectedIcon.isVisible = false
+                        }
+                        setupItemForeground(ivThumbnail, false)
+                    }
+                }
+            }
+        }
     }
 
     override fun getItemCount() = differ.currentList.size

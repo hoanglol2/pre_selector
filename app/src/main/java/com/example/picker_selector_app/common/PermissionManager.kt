@@ -13,6 +13,7 @@ class PermissionManager private constructor(private val fragment: WeakReference<
 
     private val requiredPermissions = mutableListOf<Permission>()
     private var rationale: String? = null
+    private var isShowAlertDialog = true
     private var callback: (Boolean) -> Unit = {}
     private var detailedCallback: (Map<Permission,Boolean>) -> Unit = {}
 
@@ -23,6 +24,11 @@ class PermissionManager private constructor(private val fragment: WeakReference<
 
     companion object {
         fun from(fragment: Fragment) = PermissionManager(WeakReference(fragment))
+    }
+
+    fun isShowAlertDialog(isShow: Boolean) : PermissionManager {
+        isShowAlertDialog = isShow
+        return this
     }
 
     fun rationale(description: String): PermissionManager {
@@ -49,7 +55,7 @@ class PermissionManager private constructor(private val fragment: WeakReference<
         fragment.get()?.let { fragment ->
             when {
                 areAllPermissionsGranted(fragment) -> sendPositiveResult()
-                shouldShowPermissionRationale(fragment) -> displayRationale(fragment)
+                shouldShowPermissionRationale(fragment) && isShowAlertDialog -> displayRationale(fragment)
                 else -> requestPermissions()
             }
         }

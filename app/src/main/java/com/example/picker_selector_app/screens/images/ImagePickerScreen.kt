@@ -104,7 +104,7 @@ class ImagePickerScreen : BaseFragment() {
                 else FolderFragment.newInstance(config.folderGridCount)
             toolbarImagePicker.config(config)
             activity?.supportFragmentManager?.commit {
-                replace(R.id.frgContainerImagePicker, initialFragment)
+                add(R.id.frgContainerImagePicker, initialFragment)
             }
         }
     }
@@ -125,12 +125,10 @@ class ImagePickerScreen : BaseFragment() {
             permissionManager
                 .request(Permission.Storage)
                 .rationale("We need permission to see your beautiful face")
+                .isShowAlertDialog(false)
                 .checkPermission { isGranted ->
                     if (isGranted) {
-//                        root.success("We can see your face :)")
                         fetchData()
-                    } else {
-//                        root.error("We couldn't access the camera :(")
                     }
                 }
         }
@@ -142,12 +140,10 @@ class ImagePickerScreen : BaseFragment() {
             permissionManager
                 .request(Permission.Storage, Permission.Camera)
                 .rationale("We need permission to see your beautiful face")
+                .isShowAlertDialog(false)
                 .checkPermission { isGranted ->
                     if (isGranted) {
-//                        root.success("We can see your face :)")
                         fetchData()
-                    } else {
-//                        root.error("We couldn't access the camera :(")
                     }
                 }
         }
