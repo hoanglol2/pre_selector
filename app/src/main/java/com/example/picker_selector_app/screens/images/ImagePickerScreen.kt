@@ -27,9 +27,6 @@ class ImagePickerScreen : BaseFragment() {
     private var binding: FragmentImagePickerScreenBinding? = null
     private val permissionManager = PermissionManager.from(this)
     private lateinit var config: ImagePickerConfig
-    private val imagePickerShareVM: ImagePickerViewModel by navGraphViewModels(R.id.nav_graph_image) {
-        ImagePickerViewModel.factory()
-    }
 
     companion object {
         private const val IMAGE_PICKER_CONFIG_ARG = "IMAGE_PICKER_CONFIG_ARG"
@@ -41,7 +38,7 @@ class ImagePickerScreen : BaseFragment() {
             config: ImagePickerConfig
         ) {
             fragment.findNavController().navigateAnim(
-                R.id.toNavGraphImage,
+                R.id.nav_graph_image,
                 bundleOf(IMAGE_PICKER_CONFIG_ARG to config)
             )
         }
@@ -51,7 +48,7 @@ class ImagePickerScreen : BaseFragment() {
         super.onCreate(savedInstanceState)
         config = arguments?.getParcelable(EXTRA_CONFIG) ?: ImagePickerConfig()
         config.initDefaultValues(safeContext)
-        imagePickerShareVM.setConfig(config)
+//        imagePickerShareVM.setConfig(config)
     }
 
     override fun onCreateView(
@@ -103,20 +100,24 @@ class ImagePickerScreen : BaseFragment() {
                 if (config.isFolderMode) FolderFragment.newInstance(config.folderGridCount)
                 else FolderFragment.newInstance(config.folderGridCount)
             toolbarImagePicker.config(config)
-            activity?.supportFragmentManager?.commit {
-                add(R.id.frgContainerImagePicker, initialFragment)
-            }
+//            activity?.supportFragmentManager?.commit {
+//                replace(R.id.frgContainerImagePicker, initialFragment)
+//            }
+
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.frgContainerImagePicker, initialFragment)
+                ?.commit()
         }
     }
 
     private fun initObserver() {
-        imagePickerShareVM.folderLiveEvent.observe(viewLifecycleOwner) { folder ->
-            setupImageScreen(folder)
-        }
+//        imagePickerShareVM.folderLiveEvent.observe(viewLifecycleOwner) { folder ->
+//            setupImageScreen(folder)
+//        }
     }
 
     private fun fetchData() {
-        imagePickerShareVM.fetchImages()
+//        imagePickerShareVM.fetchImages()
     }
 
     private fun fetchDataWithPermission() {
@@ -150,21 +151,28 @@ class ImagePickerScreen : BaseFragment() {
     }
 
     private fun onDone() {
-        val selectedImages = imagePickerShareVM.selectedImages.value
-        Timber.d("selectedImages: $selectedImages")
+//        val selectedImages = imagePickerShareVM.selectedImages.value
+//        Timber.d("selectedImages: $selectedImages")
         // finishPickImages(selectedImages ?: arrayListOf())
     }
 
     private fun setupImageScreen(folder: Folder) {
-        activity?.apply {
-            supportFragmentManager.commit {
-                add(
-                    R.id.frgContainerImagePicker,
-                    ImageFragment.newInstance(folder.bucketId, config.imageGridCount)
-                )
-                addToBackStack(null)
-            }
-        }
+//        activity?.apply {
+//            supportFragmentManager.commit {
+//                add(
+//                    R.id.frgContainerImagePicker,
+//                    ImageFragment.newInstance(folder.bucketId, config.imageGridCount)
+//                )
+//                addToBackStack(null)
+//            }
+//        }
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.add(
+                R.id.frgContainerImagePicker,
+                ImageFragment.newInstance(folder.bucketId, config.imageGridCount)
+            )
+            ?.addToBackStack(null)
+            ?.commit()
         binding?.toolbarImagePicker?.setTitle(folder.name)
     }
 

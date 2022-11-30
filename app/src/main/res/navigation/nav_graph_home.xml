@@ -11,10 +11,4 @@
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" />
 
-    <action
-        android:id="@+id/toNavGraphImage"
-        app:destination="@id/nav_graph_image" />
-
-    <include app:graph="@navigation/nav_graph_image" />
-
 </navigation>

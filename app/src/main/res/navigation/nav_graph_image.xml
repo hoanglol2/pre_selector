@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_image"
-    app:startDestination="@id/imagePickerScreen">
-
-    <fragment
-        android:id="@+id/imagePickerScreen"
-        android:name="com.example.picker_selector_app.screens.images.ImagePickerScreen"
-        android:label="fragment_image_picker_screen"
-        tools:layout="@layout/fragment_image_picker_screen" />
+    app:startDestination="@id/folderFragment">
 
     <fragment
         android:id="@+id/imageFragment"
         android:name="com.example.picker_selector_app.screens.images.ImageFragment"
         android:label="fragment_image"
-        tools:layout="@layout/fragment_image" />
+        tools:layout="@layout/fragment_base_image_folder" />
+
+    <fragment
+        android:id="@+id/folderFragment"
+        android:name="com.example.picker_selector_app.screens.images.FolderFragment"
+        android:label="FolderFragment" />
 
 </navigation>
